@@ -45,7 +45,7 @@
 	# bounded by GIS mask
 	basinMap = 'basin'
 	hillslopeMap = 'hill'
-	zoneMAP = 'patch'
+	zoneMAP = 'zone'
 	patchMAP = 'patch'
 
 	# extract RHESSys structural IDs 
