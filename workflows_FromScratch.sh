@@ -71,9 +71,9 @@ grass74 $LOCATION/$MAPSET --exec v.in.ogr --overwrite input=$PROJDIR/raw_data/$g
 LOCATIONOUTLET=$GISDBASE/outletRAW
 grass74 $LOCATION/$MAPSET --exec v.proj --overwrite location=outletRAW mapset=PERMANENT input=outlet output=outlet
 # declare $(v.out.ascii input=outlet type=point format=point separator=space | awk '{print "xyCoord=" $1 "," $2}')
-thres='6200' # number of grids (will be updated to use area instead)
+thres='620000' # meter squre 62 ha
 expectedDrainageArea=8613900 # meter squre (allow 2% error)
-grass74 $LOCATION/$MAPSET --exec sh $PROJDIR/$RHESSysNAME/GIS2RHESSys-master/grass_delineation.sh $thres $(bc <<< "0.98*$expectedDrainageArea/$RESOLUTION/$RESOLUTION") $(bc <<< "1.02*$expectedDrainageArea/$RESOLUTION/$RESOLUTION")
+grass74 $LOCATION/$MAPSET --exec sh $PROJDIR/$RHESSysNAME/GIS2RHESSys-master/grass_delineation.sh $(bc <<< "$thres/$RESOLUTION/$RESOLUTION") $(bc <<< "0.98*$expectedDrainageArea/$RESOLUTION/$RESOLUTION") $(bc <<< "1.02*$expectedDrainageArea/$RESOLUTION/$RESOLUTION")
 ### ... set zone (optional)
 grass74 $LOCATION/$MAPSET --exec Rscript $PROJDIR/$RHESSysNAME/GIS2RHESSys-master/zone_cluster.R dem slope aspect hill
 ###
