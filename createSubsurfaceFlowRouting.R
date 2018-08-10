@@ -12,7 +12,7 @@ RtoD = 1/DtoR
 # bounded by GIS mask
 	basinMap = 'basin'
 	hillslopeMap = 'hill'
-	zoneMAP = 'patch'
+	zoneMAP = 'zone'
 	xMap = 'xmap'
 	yMap = 'ymap'
 	patchMAP = 'patch'
