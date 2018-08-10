@@ -35,7 +35,7 @@ grass74 $LOCATION/$MAPSET --exec r.in.gdal -e --overwrite input=$PROJDIR/raw_dat
 LOCATIONDEM=$GISDBASE/elevationRAW
 grass74 $LOCATIONDEM/$MAPSET --exec g.region raster=demRAW
 grass74 $LOCATIONDEM/$MAPSET --exec g.region res=$RESOLUTION -a -p
-grass74 $LOCATIONDEM/$MAPSET --exec r.resamp.stats -w input=demRAW output=dem$RESOLUTION'm'
+grass74 $LOCATIONDEM/$MAPSET --exec r.resamp.stats --overwrite -w input=demRAW output=dem$RESOLUTION'm'
 grass74 $LOCATIONDEM/$MAPSET --exec r.out.gdal --overwrite input=dem$RESOLUTION'm' output=$PROJDIR/raw_data/dem$RESOLUTION'm.tif' format=GTiff
 ### ... import the (rescaled) elevation data into "$LOCATION/$MAPSET"; dem -> dem_ for the next step
 grass74 $LOCATION/$MAPSET --exec r.in.gdal -o -e --overwrite input=$PROJDIR/raw_data/dem$RESOLUTION'm.tif' output=dem_
@@ -78,13 +78,13 @@ grass74 $LOCATION/$MAPSET --exec sh $PROJDIR/$RHESSysNAME/GIS2RHESSys-master/gra
 grass74 $LOCATION/$MAPSET --exec Rscript $PROJDIR/$RHESSysNAME/GIS2RHESSys-master/zone_cluster.R dem slope aspect hill
 ###
 ### procedure V - (1-m) LULC, vectorize "patch" from "$LOCATION/$MAPSET" and calculate
-grass74 $LOCATION/$MAPSET --exec r.to.vect input=patch output=patch type=area
+grass74 $LOCATION/$MAPSET --exec r.to.vect --overwrite input=patch output=patch type=area
 downloadedLULCfile='BACO_BACI_1m_LU_utm1.tif' # full path to the downloaded <file>
 grass74 $LOCATION/$MAPSET --exec r.in.gdal -e --overwrite input=$PROJDIR/raw_data/$downloadedLULCfile output=lulcRAW location=lulcRAW
 LOCATIONLULC=$GISDBASE/lulcRAW
 grass74 $LOCATIONLULC/$MAPSET --exec r.colors map=lulcRAW color=random
-grass74 $LOCATIONLULC/$MAPSET --exec v.proj location=$LOCATION_NAME mapset=PERMANENT input=patch output=patch$RESOLUTION'm'
-grass74 $LOCATIONLULC/$MAPSET --exec v.to.rast input=patch$RESOLUTION'm' output=patch$RESOLUTION'm' use=attr attribute_column=value
+grass74 $LOCATIONLULC/$MAPSET --exec v.proj --overwrite location=$LOCATION_NAME mapset=PERMANENT input=patch output=patch$RESOLUTION'm'
+grass74 $LOCATIONLULC/$MAPSET --exec v.to.rast --overwrite input=patch$RESOLUTION'm' output=patch$RESOLUTION'm' use=attr attribute_column=value
 grass74 $LOCATIONLULC/$MAPSET --exec Rscript $PROJDIR/$RHESSysNAME/GIS2RHESSys-master/aggregate_lulcFrac.R patch$RESOLUTION'm' lulcRAW $PROJDIR/$RHESSysNAME/lulcFrac$RESOLUTION'm.csv'
 grass74 $LOCATION/$MAPSET --exec Rscript $PROJDIR/$RHESSysNAME/GIS2RHESSys-master/aggregate_lulcFrac_write2GIS.R patch $PROJDIR/$RHESSysNAME/lulcFrac$RESOLUTION'm.csv'
 ###
