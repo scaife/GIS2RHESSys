@@ -33,7 +33,7 @@ grass74 -c $EPSGCODE -e $LOCATION
 LOCATIONDEM=$GISDBASE/elevationRAW
 grass74 $LOCATIONDEM/$MAPSET --exec g.region raster=demRAW
 grass74 $LOCATIONDEM/$MAPSET --exec g.region res=$RESOLUTION -a -p
-grass74 $LOCATIONDEM/$MAPSET --exec r.resamp.stats -w input=demRAW output=dem$RESOLUTION'm'
+grass74 $LOCATIONDEM/$MAPSET --exec r.resamp.stats --overwrite -w input=demRAW output=dem$RESOLUTION'm'
 grass74 $LOCATIONDEM/$MAPSET --exec r.out.gdal --overwrite input=dem$RESOLUTION'm' output=$PROJDIR/raw_data/dem$RESOLUTION'm.tif' format=GTiff
 ### ... import the (rescaled) elevation data into "$LOCATION/$MAPSET"
 grass74 $LOCATION/$MAPSET --exec r.in.gdal -o -e --overwrite input=$PROJDIR/raw_data/dem$RESOLUTION'm.tif' output=dem_
@@ -49,7 +49,7 @@ downloadedSSURGOdirectory='MD005'
 LOCATIONSOIL=$GISDBASE/soilRAW
 grass74 $LOCATION/$MAPSET --exec v.proj --overwrite location=soilRAW mapset=PERMANENT input=ssurgo output=ssurgo
 grass74 $LOCATION/$MAPSET --exec v.to.rast --overwrite input=ssurgo use=cat output=soil_ssurgo
-grass74 $LOCATION/$MAPSET --exec v.db.select map=ssurgo separator=comma file=$PROJDIR/$RHESSysNAME/soil_cat_mukey.csv
+grass74 $LOCATION/$MAPSET --exec v.db.select --overwrite map=ssurgo separator=comma file=$PROJDIR/$RHESSysNAME/soil_cat_mukey.csv
 #Rscript $PROJDIR/$RHESSysNAME/ssurgo_extraction-master/ssurgo_extraction.R $PROJDIR/raw_data/$downloadedSSURGOdirectory
 grass74 $LOCATION/$MAPSET --exec Rscript $PROJDIR/$RHESSysNAME/ssurgo_extraction-master/ssurgo_soiltexture2gis.R $PROJDIR/$RHESSysNAME/soil_cat_mukey.csv $PROJDIR/raw_data/$downloadedSSURGOdirectory/soil_mukey_texture.csv
 ### ... use soil to define riparian are in this case (optional)
@@ -77,10 +77,10 @@ grass74 $LOCATION/$MAPSET --exec sh $PROJDIR/$RHESSysNAME/GIS2RHESSys-master/gra
 grass74 $LOCATION/$MAPSET --exec Rscript $PROJDIR/$RHESSysNAME/GIS2RHESSys-master/zone_cluster.R dem slope aspect hill
 ###
 ### procedure V - (1-m) LULC, vectorize "patch" from "$LOCATION/$MAPSET" and calculate
-grass74 $LOCATION/$MAPSET --exec r.to.vect input=patch output=patch type=area
+grass74 $LOCATION/$MAPSET --exec r.to.vect --overwrite input=patch output=patch type=area
 LOCATIONLULC=$GISDBASE/lulcRAW
-grass74 $LOCATIONLULC/$MAPSET --exec v.proj location=$LOCATION_NAME mapset=PERMANENT input=patch output=patch$RESOLUTION'm'
-grass74 $LOCATIONLULC/$MAPSET --exec v.to.rast input=patch$RESOLUTION'm' output=patch$RESOLUTION'm' use=attr attribute_column=value
+grass74 $LOCATIONLULC/$MAPSET --exec v.proj --overwrite location=$LOCATION_NAME mapset=PERMANENT input=patch output=patch$RESOLUTION'm'
+grass74 $LOCATIONLULC/$MAPSET --exec v.to.rast --overwrite input=patch$RESOLUTION'm' output=patch$RESOLUTION'm' use=attr attribute_column=value
 grass74 $LOCATIONLULC/$MAPSET --exec Rscript $PROJDIR/$RHESSysNAME/GIS2RHESSys-master/aggregate_lulcFrac.R patch$RESOLUTION'm' lulcRAW $PROJDIR/$RHESSysNAME/lulcFrac$RESOLUTION'm.csv'
 grass74 $LOCATION/$MAPSET --exec Rscript $PROJDIR/$RHESSysNAME/GIS2RHESSys-master/aggregate_lulcFrac_write2GIS.R patch $PROJDIR/$RHESSysNAME/lulcFrac$RESOLUTION'm.csv'
 ###
@@ -88,9 +88,9 @@ grass74 $LOCATION/$MAPSET --exec Rscript $PROJDIR/$RHESSysNAME/GIS2RHESSys-maste
 LOCATIONROAD=$GISDBASE/roadRAW
 grass74 $LOCATION/$MAPSET --exec v.proj --overwrite location=roadRAW mapset=PERMANENT input=roads output=roadline
 ### ... reduce road vector database and set buffer for roads.
-grass74 $LOCATION/$MAPSET --exec r.to.vect input=basin output=basin type=area
-grass74 $LOCATION/$MAPSET --exec v.clip -r input=roadline clip=basin output=cliproadline
-grass74 $LOCATION/$MAPSET --exec v.buffer input=cliproadline type=line output=roadbuffer distance=3
+grass74 $LOCATION/$MAPSET --exec r.to.vect --overwrite input=basin output=basin type=area
+grass74 $LOCATION/$MAPSET --exec v.clip --overwrite -r input=roadline clip=basin output=cliproadline
+grass74 $LOCATION/$MAPSET --exec v.buffer --overwrite input=cliproadline type=line output=roadbuffer distance=3
 grass74 $LOCATION/$MAPSET --exec v.to.rast --overwrite input=roadbuffer output=roads use=cat
 ###
 ### procedure VII - extract
