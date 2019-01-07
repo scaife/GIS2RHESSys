@@ -2,6 +2,9 @@
 inputThreshold=$1
 inputLower=$2
 inputUpper=$3
+echo $inputThreshold
+echo $inputLower
+echo $inputUpper
 #
 g.region raster=dem
 r.mask -r
