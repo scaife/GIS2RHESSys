@@ -1,4 +1,4 @@
-source("~/LIB_misc.r")
+#source("~/LIB_misc.r")
 options(scipen=999)
 arg=commandArgs(T)
 inputfile = arg[1]
@@ -43,13 +43,13 @@ num_patch=0;
 
 title=c(
 	"worldID",
-	"basinID","basinX","basinY","basinZ","basinDefID","basinLatitude","basinBase",
+	"basinID","basinX","basinY","basinZ","basinDefID","basinLatitude","basinBase", #8
 	
-	"hillID","hillX","hillY","hillZ","hillDefID","hillgws","hillgwno3","hillBase",
+	"hillID","hillX","hillY","hillZ","hillDefID","hillgws","hillgwno3","hillBase", #16
 	
-	"zoneID","zoneX","zoneY","zoneZ","zoneDefID","zoneArea","zoneSlope","zoneAspect","zoneIso","zoneEH","zoneWH", "zoneBase","zoneBaseID",
+	"zoneID","zoneX","zoneY","zoneZ","zoneDefID","zoneArea","zoneSlope","zoneAspect","zoneIso","zoneEH","zoneWH", "zoneBase","zoneBaseID", #29
 	
-	"patchID","patchX","patchY","patchZ","patchSoilID","patchLandID","patchArea","patchSlope","patchLNA","patchKsat","patchMpar",
+	"patchID","patchX","patchY","patchZ","patchsoilID","patchLandID","patchArea","patchSlope","patchLNA","patchKsat","patchMpar",
 	"patchRZstorage","patchUnsat","patchSat",
 	"patchSnowEZ","patchSnowZ","patchSnowT","patchSnowAge","patchSnowED", 
 	"patchLittercfrac","patchLitterStorage","patchLitterc1","patchLittern1","patchLitterc2","patchLitterc3","patchLitterc4",
@@ -110,7 +110,7 @@ for(bi in 1:num_basin){
 			as.numeric(gsub("[^0-9.-]","",gsub("[[:lower:]]\\..","",line[4]))), #<<---- hill z
 			as.numeric(gsub("[^0-9.-]","",gsub("[[:lower:]]\\..","",line[5]))), #<<---- hill def ID
 			as.numeric(gsub("[^0-9.-]","",gsub("[[:lower:]]\\..","",line[6]))), #<<---- hill gw.storage
-			as.numeric(gsub("[^0-9.-]","",gsub("[[:lower:]]\\..","",line[7]))), #<<---- hill gw.no3
+			as.numeric(gsub("[^0-9.-]","",gsub("[[:lower:]]\\..","",line[7]))), #<<---- hill gw.no3 <<--- this 3
 			as.numeric(gsub("[^0-9.-]","",gsub("[[:lower:]]\\..","",line[8]))), #<<---- hill #basestation [what is it? always zero!]
 			as.numeric(gsub("[^0-9.-]","",gsub("[[:lower:]]\\..","",line[9]))) #<<---- # zone
 		)
