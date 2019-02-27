@@ -1,6 +1,7 @@
 # GIS2RHESSys 1mUrban
 
 We assume that 1-m LULC and elevation data are available for the catchment.
+This is based on BES sites.
 
 updated feature:
 1) workflows_xxx.sh is the main script users need to edit and review. The script is helping users on setup GRASS GIS and RHESSys model using standardized procedures. However, users are responsible to understand the script and procedure and make customization for specific model setup.
