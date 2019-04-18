@@ -1,8 +1,4 @@
 #!/bin/bash
-#
-# assume new fully bundled GRASS 7.4 is installed from http://grassmac.wikidot.com/downloads
-# assume R and rgrass7 package are installed.
-# assume ssurgo_extraction.R is downloaded and saved together with this script.
 
 export PATH=$PATH:/usr/local/bin
 export PATH=$PATH:/Library/Frameworks/R.framework/Resources
