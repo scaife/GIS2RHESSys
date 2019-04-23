@@ -19,7 +19,7 @@
 	rast3 = readRAST(strMAP)
 	str = rast3@data[[1]][mask]	
 	
-	lulcMAP = 'NLCD' # NLCD coded
+	lulcMAP = 'LULCcode' # NLCD coded
 	rast4 = readRAST(lulcMAP)
 	lulc = rast4@data[[1]][mask]	
 		
